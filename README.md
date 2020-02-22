@@ -8,3 +8,9 @@ git clone ...
 cd <project>
 docker-compose up
 ```
+## TODOs
+- [x] NodeJS with Typescript
+- [x] Dockerize
+- [ ] Connect MongoDB
+- [ ] Unit test
+- [ ] Integration test
