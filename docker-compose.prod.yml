@@ -4,10 +4,10 @@ services:
   nodejs:
     build:
       context: ./server
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.prod
     image: nodejs
     container_name: nodejs
-    restart: always
+    restart: unless-stopped
     env_file: .env
     environment:
       - MONGO_USERNAME=$MONGO_USERNAME
@@ -27,7 +27,7 @@ services:
   db:
     image: mongo:4.0-xenial
     container_name: db
-    restart: always
+    restart: unless-stopped
     env_file: .env
     environment:
       - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
