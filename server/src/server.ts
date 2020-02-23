@@ -1,7 +1,14 @@
 import express from 'express';
 import graphqlHTTP from 'express-graphql';
+import mongoose from 'mongoose';
+
 import { blogSchema } from './schema/blog';
 import { getBlog, getBlogs } from './services/blog';
+import { url, options } from './services/database';
+
+mongoose.connect(url, options)
+.then(() => console.log('MongoDB Connected'))
+.catch(err => console.log(err));
 
 // Root resolver
 const root = {
