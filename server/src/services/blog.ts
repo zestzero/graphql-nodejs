@@ -1,4 +1,6 @@
 import { Blog } from '../models/blog.d';
+import { BlogsModel } from '../models/Blogs';
+import BlogsRepository from '../schema/blog';
 
 const blogData: Blog[] = [
     {
@@ -32,6 +34,18 @@ interface BlogsArgs {
     topic: string;
 }
 
+const seedData = function () {
+    blogData.forEach(b => {
+        const blog = new BlogsModel;
+        blog.set('id', b.id);
+        blog.set('title', b.title);
+        blog.set('author', b.author);
+        blog.set('description', b.description);
+        blog.set('topic', b.topic);
+        blog.save();
+    });
+}
+
 const getBlog = function (args: BlogArgs) {
     var id = args.id;
     return blogData.filter(course => {
@@ -39,16 +53,18 @@ const getBlog = function (args: BlogArgs) {
     })[0];
 };
 
-const getBlogs = function (args: BlogsArgs) {
+const getBlogs = async (args: BlogsArgs) => {
+    const blogs = await BlogsRepository.findAll();
     if (args.topic) {
         var topic = args.topic;
-        return blogData.filter(course => course.topic === topic);
+        return blogs.filter(course => course.topic === topic);
     } else {
-        return blogData;
+        return blogs;
     }
 };
 
 export {
+    seedData,
     getBlog,
     getBlogs
 };
